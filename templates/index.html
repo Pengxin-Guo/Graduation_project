@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link href="{% static "css/index.css" %}" rel="stylesheet" type="text/css" media="all"/>
+</head>
+<body>
+ <div class="content-main">
+     <div class="content-left">
+         <table border="1px">
+             <tr>
+                 <td width="210px"><h1>图片上传页面</h1></td>
+                 <td width="390px" style="text-align: right">
+                     <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" name="img" required accept="image/*"/>
+                         <select name="task_id">
+                            <option value="1">amazon</option>
+                            <option value="2">caltech</option>
+                            <option value="3">dslr</option>
+                            <option value="4">webcam</option>
+                        </select>
+                         <input type="submit" value="提交">
+                     </form>
+                 </td>
+             </tr>
+         </table>
+         <table>
+             <tr>
+                 <td height="200px" width="400px" align="center">
+                     <img src="{{ img_url }}" width="200px" height="200px">
+                 </td>
+                 <td height="200px" width="400px" style="text-align: center; font-size: 32px">
+                     {{ task_name }}
+                 </td>
+             </tr>
+         </table>
+            </div>
+     <div class="content-right">
+         <table border="1px">
+             <tr>
+                 <td width="600px" style="text-align: center;"><h1>预测页面</h1></td>
+             </tr>
+         </table>
+         <table>
+             <tr>
+                 <td height="200px" width="400px" style="text-align: center; font-size: 20px">
+                     {{ text }}
+                 </td>
+                 <td height="200px" width="400px" style="text-align: center; font-size: 32px">
+                     {{ label }}
+                 </td>
+                 <td height="200px" width="400px" style="text-align: center; font-size: 20px">
+                     {{ prob }}
+                 </td>
+             </tr>
+         </table>
+     </div>
+ </div>
+</body>
+
+</html>
