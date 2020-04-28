@@ -48,14 +48,16 @@ def np_softmax(x):
 
 
 def predict(input, task_id):
-    hidden_feature = np.tanh(np.multiply(input, Para.input_hidden_weights))
-    temp_hidden_feature = np.concatenate([hidden_feature, Para.task_embedding_vectors[task_id]], 0)
+    hidden_feature = np.tanh(np.dot(input, Para.input_hidden_weights))
+    task_embedding_vectors = np.stack(Para.task_embedding_vectors)
+    temp_hidden_feature = np.concatenate([hidden_feature, task_embedding_vectors[task_id].reshape([1, -1])], 1)
     probits_softmax = []
     for j in range(Para.num_class):
-        temp = np.concatenate([temp_hidden_feature, Para.class_embedding_vectors[task_id * Para.num_task + j]], 0)
-        probit_softmax = np_softmax(np.multiply(temp, Para.hidden_output_weight[task_id]))
+        temp = np.concatenate([temp_hidden_feature, np.stack(Para.class_embedding_vectors[task_id * Para.num_task + j]).reshape([1, -1])], 1)
+        probit_softmax = np_softmax(np.dot(temp, Para.hidden_output_weight[task_id]))
         probits_softmax.append(probit_softmax)
-    probits_softmax = np.stack(probits_softmax)
+    probits_softmax = np.concatenate([probits_softmax], 0).reshape([Para.num_class, Para.num_class])
+    print('probits_softmax.shape = ', probits_softmax.shape)
     diagonal = []
     for j in range(Para.num_class):
         diagonal.append(probits_softmax[j][j])

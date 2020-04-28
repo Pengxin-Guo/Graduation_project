@@ -6,6 +6,8 @@ import image_classification.algorithm.function as my_F
 # Create your views here.
 
 task_list = ['amazon', 'caltech', 'dslr', 'webcam']
+label_list = ['back_pack', 'bike', 'calculator', 'headphones', 'keyboard',
+              'laptop_computer', 'monitor', 'mouse', 'mug', 'projector']
 
 
 def index(request):
@@ -35,7 +37,7 @@ def index(request):
                       {'img_url': img.name,
                        'task_name': 'Task ' + task_id + ': ' + task_name,
                        'text': "It's a/an",
-                       'label': label,
+                       'label': label_list[label],
                        'prob': prob})
     return render(request, 'index.html')
 
