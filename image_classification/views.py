@@ -33,11 +33,12 @@ def index(request):
         feature = my_F.extract_feature_vgg19(img_url)
         # 预测图片所属的类别，以及属于该类的概率
         label, prob = my_F.predict(feature, int(task_id) - 1)
+        prob = round(prob * 100, 2)
         return render(request, 'index.html',
                       {'img_url': img.name,
                        'task_name': 'Task ' + task_id + ': ' + task_name,
                        'text': "It's a/an",
                        'label': label_list[label],
-                       'prob': prob})
+                       'prob': str(prob) + '%'})
     return render(request, 'index.html')
 

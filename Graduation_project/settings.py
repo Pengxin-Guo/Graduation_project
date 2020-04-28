@@ -129,3 +129,5 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+PARA_PATH = os.path.join(BASE_DIR, 'image_classification/algorithm/parameter/')
